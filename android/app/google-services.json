@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997812085017",
+    "project_id": "hannanarita",
+    "storage_bucket": "hannanarita.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997812085017:android:b8dba6eed3e0bb6a8e2588",
+        "android_client_info": {
+          "package_name": "com.example.hanna_narita"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgjjQjNNPJiGlww7x9LQAWqo5pJqp_aZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
