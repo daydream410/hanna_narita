@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePageController extends GetxController {
   final searchLog = TextEditingController().obs;
+  final searchLogSM = TextEditingController().obs;
   final nama = TextEditingController().obs;
   final nohp = TextEditingController().obs;
   final alamat = TextEditingController().obs;

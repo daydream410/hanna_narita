@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +19,8 @@ class ExportToExcel extends StatefulWidget {
 
 final fromdate = TextEditingController().obs;
 final todate = TextEditingController().obs;
-
 late DateTime fromdatee;
 late DateTime todatee;
-List nama = [];
-var umur;
-var nohp;
-var alamat;
-var tipekelas;
-var jumlahsesi;
-var statuspembayaran;
 
 class _ExportToExcelState extends State<ExportToExcel> {
   @override
@@ -137,7 +130,25 @@ class _ExportToExcelState extends State<ExportToExcel> {
                       // onPressed: createExcel,
                       onPressed: () {
                         // getData();
-                        createExcel();
+                        // createExcel();
+                        if (fromdate.value.text == '' ||
+                            todate.value.text == '') {
+                          Get.snackbar(
+                            'Warning',
+                            'Silahkan Mengisi Tanggal!',
+                            backgroundColor: HexColor('#F19ED2'),
+                            colorText: Colors.black,
+                          );
+                        } else {
+                          Get.snackbar(
+                            'Success',
+                            'Membuka Rekapan Excel Periode ${DateFormat('dd-MM-yyyy').format(fromdatee)} - ${DateFormat('dd-MM-yyyy').format(todatee)}',
+                            backgroundColor: HexColor('#E8C5E5'),
+                            colorText: Colors.black,
+                          );
+                          Timer(const Duration(seconds: 4), createExcel);
+                          // createExcel();
+                        }
                       },
                       child: const Text(
                         'Export To Excel',
@@ -217,39 +228,6 @@ class _ExportToExcelState extends State<ExportToExcel> {
     }
   }
 
-  // Future<void> getData() async {
-  // var collection = FirebaseFirestore.instance
-  //     .collection('murid_list')
-  //     .orderBy('tanggalinput')
-  //     .where(
-  //       'tanggainput',
-  //       isGreaterThanOrEqualTo: Timestamp.fromDate(fromdatee),
-  //       isLessThanOrEqualTo: Timestamp.fromDate(todatee),
-  //     );
-  // var collection = FirebaseFirestore.instance.collection('murid_list');
-
-  // var querySnapshot = await collection.get();
-  // for (var queryDocumentSnapshot in querySnapshot.docs) {
-  //   Map<String, dynamic> data = queryDocumentSnapshot.data();
-  //   nama = data['nama'];
-  //   umur = data['umur'];
-  //   umur = data['umur'];
-  //   nohp = data['nohp'];
-  //   alamat = data['alamat'];
-  //   tipekelas = data['tipekelas'];
-  //   jumlahsesi = data['jumlahsesi'];
-  //   statuspembayaran = data['statuspembayaran'];
-  //   var tanggalinput = data['tanggalinput'];
-  //   var tanggalinputt = tanggalinput.toDate();
-  //   // print(name);
-  //   // print(nohp);
-  //   // print(DateFormat('dd-MM-yyyy, HH:mm').format(tanggalinputt));
-  //   // print(tanggalinputt);
-  // }
-  // print(Timestamp.fromDate(fromdatee));
-  // print(Timestamp.fromDate(todatee));
-  // }
-
   Future<void> createExcel() async {
     var collection = FirebaseFirestore.instance.collection('murid_list').where(
         'tanggalinput',
@@ -269,6 +247,10 @@ class _ExportToExcelState extends State<ExportToExcel> {
     sheet.getRangeByName('G1').columnWidth = 15;
     sheet.getRangeByName('H1').columnWidth = 20;
     sheet.getRangeByName('I1').columnWidth = 20;
+    sheet.getRangeByName('J1').columnWidth = 20;
+    sheet.getRangeByName('K1').columnWidth = 20;
+    sheet.getRangeByName('L1').columnWidth = 20;
+    sheet.getRangeByName('M1').columnWidth = 20;
 
     sheet.getRangeByName('A1').setText('No');
     sheet.getRangeByName('B1').setText('Nama Lengkap');
@@ -278,11 +260,24 @@ class _ExportToExcelState extends State<ExportToExcel> {
     sheet.getRangeByName('F1').setText('Tipe Kelas');
     sheet.getRangeByName('G1').setText('Jumlah Sesi');
     sheet.getRangeByName('H1').setText('Status Pembayaran');
-    sheet.getRangeByName('I1').setText('Tanggal Daftar');
+    sheet.getRangeByName('I1').setText('Tanggal DP');
+    sheet.getRangeByName('J1').setText('Nominal DP');
+    sheet.getRangeByName('K1').setText('Tanggal Lunas');
+    sheet.getRangeByName('L1').setText('Nominal Lunas');
+    sheet.getRangeByName('M1').setText('Tanggal Daftar');
     int no = 0;
+    // ignore: prefer_typing_uninitialized_variables
+    var tanggalDP;
+    var tanggalLunas;
     for (var i = 0; i < querySnapshot.docs.length; i++) {
       no++;
       var tanggalDaftar = querySnapshot.docs[i]['tanggalinput'].toDate();
+      if (querySnapshot.docs[i]['tanggaldp'] != null) {
+        tanggalDP = querySnapshot.docs[i]['tanggaldp'].toDate();
+      }
+      if (querySnapshot.docs[i]['tanggallunas'] != null) {
+        tanggalLunas = querySnapshot.docs[i]['tanggallunas'].toDate();
+      }
       sheet.getRangeByIndex(i + 2, 1).setText(no.toString());
       sheet
           .getRangeByIndex(i + 2, 2)
@@ -306,6 +301,21 @@ class _ExportToExcelState extends State<ExportToExcel> {
           .getRangeByIndex(i + 2, 8)
           .setText(querySnapshot.docs[i]['statuspembayaran'].toString());
       sheet.getRangeByIndex(i + 2, 9).setText(
+          querySnapshot.docs[i]['tanggaldp'] == null
+              ? '-'
+              : DateFormat('dd-MM-yyyy, HH:mm').format(tanggalDP).toString());
+      sheet
+          .getRangeByIndex(i + 2, 10)
+          .setText(querySnapshot.docs[i]['nominalpembayaranDP'].toString());
+      sheet.getRangeByIndex(i + 2, 11).setText(querySnapshot.docs[i]
+                  ['tanggallunas'] ==
+              null
+          ? '-'
+          : DateFormat('dd-MM-yyyy, HH:mm').format(tanggalLunas).toString());
+      sheet
+          .getRangeByIndex(i + 2, 12)
+          .setText(querySnapshot.docs[i]['nominalpembayaranLunas'].toString());
+      sheet.getRangeByIndex(i + 2, 13).setText(
           DateFormat('dd-MM-yyyy, HH:mm').format(tanggalDaftar).toString());
     }
 

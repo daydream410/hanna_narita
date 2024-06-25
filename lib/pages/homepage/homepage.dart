@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hanna_narita/routes/drawer.dart';
+import 'package:hanna_narita/routes/route_name.dart';
 import 'package:hexcolor/hexcolor.dart';
 // import 'package:get/get.dart';
 // import '../../routes/route_name.dart';
@@ -59,119 +61,133 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: size.width * 0.4,
-                    height: size.height * 0.20,
-                    decoration: BoxDecoration(
-                      color: HexColor('#E8C5E5'),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 4,
-                          offset: Offset(4, 8), // Shadow position
-                        ),
-                      ],
-                    ),
-                    child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('murid_list')
-                            .where('tipekelas', isEqualTo: 'Self Makeup')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          sm = snapshot.data?.docs.length ?? 0;
-                          if (snapshot.connectionState ==
-                              ConnectionState.active) {
-                            if (snapshot.hasData) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Self Makeup',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      print('aaa');
+                      Get.toNamed(RouteName.smList);
+                    },
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: size.height * 0.20,
+                      decoration: BoxDecoration(
+                        color: HexColor('#E8C5E5'),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4,
+                            offset: Offset(4, 8), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('murid_list')
+                              .where('tipekelas', isEqualTo: 'Self Makeup')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            sm = snapshot.data?.docs.length ?? 0;
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Self Makeup',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '$sm',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    Text(
+                                      '$sm',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                );
+                              }
                             } else {
                               return const Center(
                                 child: CircularProgressIndicator(
                                     color: Colors.white),
                               );
                             }
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            );
-                          }
-                        }),
+                          }),
+                    ),
                   ),
-                  Container(
-                    width: size.width * 0.4,
-                    height: size.height * 0.20,
-                    decoration: BoxDecoration(
-                      color: HexColor('#E8C5E5'),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 4,
-                          offset: Offset(4, 8), // Shadow position
-                        ),
-                      ],
-                    ),
-                    child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('murid_list')
-                            .where('tipekelas', isEqualTo: 'Self Hairdo')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          sh = snapshot.data?.docs.length ?? 0;
-                          if (snapshot.connectionState ==
-                              ConnectionState.active) {
-                            if (snapshot.hasData) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Self Hairdo',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      print('bbb');
+                      Get.toNamed(RouteName.shList);
+                    },
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: size.height * 0.20,
+                      decoration: BoxDecoration(
+                        color: HexColor('#E8C5E5'),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4,
+                            offset: Offset(4, 8), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('murid_list')
+                              .where('tipekelas', isEqualTo: 'Self Hairdo')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            sh = snapshot.data?.docs.length ?? 0;
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Self Hairdo',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '$sh',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    Text(
+                                      '$sh',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                );
+                              }
                             } else {
                               return const Center(
                                 child: CircularProgressIndicator(
                                     color: Colors.white),
                               );
                             }
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            );
-                          }
-                        }),
+                          }),
+                    ),
                   ),
                 ],
               ),
@@ -191,133 +207,147 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: size.width * 0.4,
-                    height: size.height * 0.20,
-                    decoration: BoxDecoration(
-                      color: HexColor('#E8C5E5'),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 4,
-                          offset: Offset(4, 8), // Shadow position
-                        ),
-                      ],
-                    ),
-                    child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('murid_list')
-                            .where('statuspembayaran', isEqualTo: 'DP')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          dp = snapshot.data?.docs.length ?? 0;
-                          if (snapshot.connectionState ==
-                              ConnectionState.active) {
-                            if (snapshot.hasData) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Down Payment',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      print('ccc');
+                      Get.toNamed(RouteName.dpList);
+                    },
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: size.height * 0.20,
+                      decoration: BoxDecoration(
+                        color: HexColor('#E8C5E5'),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4,
+                            offset: Offset(4, 8), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('murid_list')
+                              .where('statuspembayaran', isEqualTo: 'DP')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            dp = snapshot.data?.docs.length ?? 0;
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Down Payment',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  const Text(
-                                    '(DP)',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    const Text(
+                                      '(DP)',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '$dp',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    Text(
+                                      '$dp',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                );
+                              }
                             } else {
                               return const Center(
                                 child: CircularProgressIndicator(
                                     color: Colors.white),
                               );
                             }
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            );
-                          }
-                        }),
+                          }),
+                    ),
                   ),
-                  Container(
-                    width: size.width * 0.4,
-                    height: size.height * 0.20,
-                    decoration: BoxDecoration(
-                      color: HexColor('#E8C5E5'),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 4,
-                          offset: Offset(4, 8), // Shadow position
-                        ),
-                      ],
-                    ),
-                    child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('murid_list')
-                            .where('statuspembayaran', isEqualTo: 'Lunas')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          lunas = snapshot.data?.docs.length ?? 0;
-                          if (snapshot.connectionState ==
-                              ConnectionState.active) {
-                            if (snapshot.hasData) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Full Payment',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      print('ddd');
+                      Get.toNamed(RouteName.lunasList);
+                    },
+                    child: Container(
+                      width: size.width * 0.4,
+                      height: size.height * 0.20,
+                      decoration: BoxDecoration(
+                        color: HexColor('#E8C5E5'),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4,
+                            offset: Offset(4, 8), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('murid_list')
+                              .where('statuspembayaran', isEqualTo: 'Lunas')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            lunas = snapshot.data?.docs.length ?? 0;
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Full Payment',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  const Text(
-                                    '(Lunas)',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    const Text(
+                                      '(Lunas)',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '$lunas',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                                    Text(
+                                      '$lunas',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                );
+                              }
                             } else {
                               return const Center(
                                 child: CircularProgressIndicator(
                                     color: Colors.white),
                               );
                             }
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                  color: Colors.white),
-                            );
-                          }
-                        }),
+                          }),
+                    ),
                   ),
                 ],
               ),
